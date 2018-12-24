@@ -4,7 +4,15 @@ usage() {
         echo " -a               Enables ALL Modules in Folder." 1>&2
         echo " -h               Show this help text." 1>&2
 }
-
+checkmod() {
+        FILEMOD=$2
+        if [[ ! -f "$FILEMOD.tmp" ]]; then
+        echo "No Module named that. Please Try again, or use netup list"
+        echo " to see a list of available modules."
+        exit 0
+        fi
+}
+checkmod;
 enable() {
         mv $1.tmp $1.mdu
 }
