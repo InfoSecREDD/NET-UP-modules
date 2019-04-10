@@ -1,0 +1,26 @@
+EXT="py"
+DOWNLOADFILE="download.$EXT"
+URL=""
+LOCATION="$HOME/netup/downloadexec"
+# set METHOD to wget or curl
+METHOD="wget"
+
+# COMMAND to execute after file has downloaded.
+COMMAND="cat $LOCATION/$DOWNLOADFILE"
+
+if [ ! -d "$LOCATION" ]; then
+	mkdir -p $LOCATION
+fi
+
+if [ ! -f "$LOCATION/$DOWNLOADFILE" ]; then
+	if [ "$METHOD" == "wget" ]; then
+		wget -O "$LOCATION/$DOWNLOADFILE" "$URL"
+	fi
+        if [ "$METHOD" == "curl" ]; then
+                curl -o "$LOCATION/$DOWNLOADFILE" "$URL"
+        fi
+else
+	echo "File already exists.. $LOCATION/$DOWNLOADFILE.."
+fi
+
+$COMMAND
