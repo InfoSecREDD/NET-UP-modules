@@ -1,0 +1,32 @@
+LOGDIR="$HOME/netup/loot"
+VULNLOG="$LOGDIR/vulnlog.txt"
+mkdir -p $LOGDIR
+rm -rf $VULNLOG
+printf "        Running Vuln scan for Subnet - $SUBNET \n"
+printf "          DO NOT EXIT OR CRTL+C!  PROCESSES ARE\n"
+printf "                   STILL RUNNING!!!\n"
+printf "\n"
+printf "  Note: Scan can take 5-15 mins depending on speed of Network.\n"
+printf "\n"
+printf "                   Please Wait ... "
+echo -e "Results of $SUBNET:" > $VULNLOG
+(nmap -sV --script=vuln --script-args=vulns.short  --open $SUBNET | grep 'VULNERABLE' | awk -F'_  ' '{print $2 $3 $4}' >> $VULNLOG ; /bin/false) &
+
+pid=$! ; i=0
+while ps -a | awk '{print $1}' | grep -q "${pid}"
+do
+    c=`expr ${i} % 4`
+    case ${c} in
+       0) printf '%s\b' '\' ;;
+       1) printf '%s\b' '|' ;;
+       2) printf '%s\b' '/' ;;
+       3) printf '%s\b' '-' ;;
+    esac
+    i=`expr ${i} + 1`
+    sleep .25
+done
+wait ${pid}
+ret=$?
+echo -e ""
+cat $VULNLOG
+echo -e ""
