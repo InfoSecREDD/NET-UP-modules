@@ -10,7 +10,7 @@ printf "  Note: Scan can take 5-15 mins depending on speed of Network.\n"
 printf "\n"
 printf "                   Please Wait ... "
 echo -e "Results of $SUBNET:" > $VULNLOG
-(nmap -sV --script=vuln --script-args=vulns.short  --open $SUBNET --top-ports | grep 'tcp open\|VULNERABLE' | awk -F'_  ' '{print $1 $2 $3 $4}' | sed -r 's/\/tcp open.*/ Port Vulnerability Analysis -/' >> $VULNLOG ; /bin/false) &
+(nmap -sV --script=vuln --script-args=vulns.short  --open $SUBNET --top-ports 20 | grep 'tcp open\|VULNERABLE' | awk -F'_  ' '{print $1 $2 $3 $4}' | sed -r 's/\/tcp open.*/ Port Vulnerability Analysis -/' >> $VULNLOG ; /bin/false) &
 
 pid=$! ; i=0
 while ps -a | awk '{print $1}' | grep -q "${pid}"
