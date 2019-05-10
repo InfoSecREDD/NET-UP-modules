@@ -1,7 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash 
+# Module Header
 MODULENAME="Python Backdoor"
 MODULEVERS="1.0"
 MODULECRED="REDD"
+modcreds;
+# End of Module Header
+
 DIR=$HOME/netup/modules
 # DISCLAIMER:
 # PLEASE DO NOT... DO NOT... I REPEAT... DO... NOT... USE THIS FOR
