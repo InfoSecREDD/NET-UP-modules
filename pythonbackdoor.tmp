@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+MODULENAME="Python Backdoor"
+MODULEVERS="1.0"
+MODULECRED="REDD"
 DIR=$HOME/netup/modules
 # DISCLAIMER:
 # PLEASE DO NOT... DO NOT... I REPEAT... DO... NOT... USE THIS FOR
