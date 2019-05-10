@@ -1,3 +1,11 @@
+#!/bin/bash 
+# Module Header
+MODULENAME="Download and Execute"
+MODULEVERS="1.5"
+MODULECRED="REDD"
+modcreds;
+# End of Module Header
+
 EXT="py"
 DOWNLOADFILE="download.$EXT"
 URL=""
