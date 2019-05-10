@@ -38,6 +38,13 @@ modcreds;
 # Cleanup OS Update/Upgrade. (APT)
 # cleanup;
 
+# Force Exit of NET-UP.
+# exitnetup;
+
+# Framework-wide Variables.
+# $SUBNET = Automatically detects the Subnet of your Network.
+# More to come..
+
 # Framework Colored prompts.
 check_good "Test 1.";
 arrow_status "Test 2.";
