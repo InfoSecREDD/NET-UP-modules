@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/bin/bash 
+# Module Header
 MODULENAME="Subscan"
 MODULEVERS="1.2"
 MODULECRED="REDD"
+modcreds;
+# End of Module Header
 #
 ########################################################
 #    REDD's Recon Script for Raspbain/Debian/Ubuntu    #
