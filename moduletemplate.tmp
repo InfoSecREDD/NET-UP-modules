@@ -52,3 +52,8 @@ mod_good "Test 10.";
 mod_error "Test 11.";
 mod_noti "Test 12.";
 
+print_error "This Module is just a Template, Use this for creating your own Module.";
+
+# End of Template.
+
+do_break;
