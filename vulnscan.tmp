@@ -32,7 +32,6 @@ nmapscancommon(){
                 rm -rf $TMPLOG2;
         fi
 }
-if [ "$1" -eq "--simple" ] | [ "$1" -eq "-s" ]; then
     (nmapscancommon; /bin/false) &
     pid=$! ; i=0
     while ps -a | awk '{print $1}' | grep -q "${pid}"
@@ -52,7 +51,3 @@ if [ "$1" -eq "--simple" ] | [ "$1" -eq "-s" ]; then
     echo -e ""
     cat $VULNLOG
     echo -e ""
-fi
-if [ "$1" -eq "" ]; then
-    echo -e "Please use --simple"
-fi
