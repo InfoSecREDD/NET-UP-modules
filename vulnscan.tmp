@@ -25,8 +25,8 @@ nmapscancommon(){
         nmap -sV --script=vuln --script-args=vulns.short --open $SUBNET -p21-445 > $TMPLOG
         grep -P 'scan report for|tcp open|tcp  open|VULNERABLE[^"]*' $TMPLOG > $TMPLOG2
         sed -i 's/Nmap scan report for /Port Scan Analysis for /g' $TMPLOG2
-        sed -i 's/.tcp open.*/ Port Analysis: /g' $TMPLOG2
-        sed -i 's/.tcp  open.*/ Port Analysis: /g' $TMPLOG2
+        sed -i 's/.tcp open.*/ Port Analysis: \n/g' $TMPLOG2
+        sed -i 's/.tcp  open.*/ Port Analysis: \n/g' $TMPLOG2
         cat $TMPLOG2 > $VULNLOG
         if [ -f "$TMPLOG" ]; then   
                 rm -rf $TMPLOG;
