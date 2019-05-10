@@ -52,4 +52,15 @@ if [[ $the_info == *"502 Bad Gateway"* || $the_info == "undefined" ]]; then
 fi
 
 echo "$the_info" | sed -e '/[{}]/d' | sed 's/\"//g' | sed 's/  //g' | sed 's/,$//' | column -t >$TMPLOG1
-
+sed -i 's/ip:       /        IP Address :/g' $TMPLOG1
+sed -i 's/hostname: /        Hostname   :/g' $TMPLOG1
+sed -i 's/city:     /        City       :/g' $TMPLOG1
+sed -i 's/region:   /        Region     :/g' $TMPLOG1
+sed -i 's/country:  /        Country    :/g' $TMPLOG1
+sed -i 's/loc:      /        GPS Loc    :/g' $TMPLOG1
+sed -i 's/postal:   /        Postal Code:/g' $TMPLOG1
+sed -i 's/phone:    /        Phone Code :/g' $TMPLOG1
+sed -i 's/org:      /        Provider   :/g' $TMPLOG1
+cat $TMPLOG1
+rm -rf $TMPLOG1
+do_break;
