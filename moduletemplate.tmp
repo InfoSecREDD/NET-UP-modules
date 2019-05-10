@@ -1,0 +1,51 @@
+#!/bin/bash
+# Module Header
+MODULENAME=""
+MODULEVERS=""
+MODULECRED=""
+modcreds;
+# End of Module Header
+
+# This is a Blank Module to show what commands are present for NET-UP Framework.
+
+# Check Root function
+# check_root;
+
+# Check if action was successful.
+# check_success;
+
+# Check if Command exists.
+# command_exists;
+
+# Add blank space and newline.
+# do_break;
+
+# Pause until key is pressed.
+# pause;
+
+# Update OS Repos. (APT)
+# update;
+
+# Normal OS Upgrade. (APT)
+# upgrade;
+
+# Full OS Upgrade. (APT)
+# super_upgrade;
+
+# Cleanup OS Update/Upgrade. (APT)
+cleanup
+
+# Framework Colored prompts.
+check_good "Test 1.";
+arrow_status "Test 2.";
+print_status "Test 3.";
+print_good "Test 4.";
+print_error "Test 5.";
+print_notification "Test 6.";
+mod_checkg "Test 7.";
+mod_arrowstat "Test 8.";
+mod_status "Test 9.";
+mod_good "Test 10.";
+mod_error "Test 11.";
+mod_noti "Test 12.";
+
