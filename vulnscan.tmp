@@ -1,3 +1,6 @@
+MODULENAME="VulnScan"
+MODULEVERS="0.12"
+MODULECRED="REDD"
 LOGDIR="$HOME/netup/loot"
 VULNLOG="$LOGDIR/vulnlog.txt"
 TMPLOG="/tmp/netuplog.txt"
