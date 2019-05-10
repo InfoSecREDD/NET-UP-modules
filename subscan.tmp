@@ -1,4 +1,7 @@
 #!/bin/bash
+MODULENAME="Subscan"
+MODULEVERS="1.2"
+MODULECRED="REDD"
 #
 ########################################################
 #    REDD's Recon Script for Raspbain/Debian/Ubuntu    #
