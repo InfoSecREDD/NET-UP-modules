@@ -1,41 +1,16 @@
 MODULENAME="VulnScan"
-MODULEVERS="0.12"
+MODULEVERS="0.14"
 MODULECRED="REDD"
 LOGDIR="$HOME/netup/loot"
 VULNLOG="$LOGDIR/vulnlog.txt"
 TMPLOG="/tmp/netuplog.txt"
 TMPLOG2="/tmp/netuplog2.txt"
+DBGIP=""
 mkdir -p $LOGDIR
-rm -rf $VULNLOG
-printf "        Running Vuln scan for Subnet - $SUBNET \n"
-printf "          DO NOT EXIT OR CRTL+C!  PROCESSES ARE\n"
-printf "                   STILL RUNNING!!!\n"
-printf "\n"
-printf "  Note: Scan can take 5-15 mins depending on speed of Network.\n"
-printf "\n"
-printf "                   Please Wait ... "
-echo -e "Results of $SUBNET:" > $VULNLOG
-nmapscancommon(){
-        if [ ! -f "$TMPLOG" ]; then
-                touch $TMPLOG;
-        fi
-        if [ ! -f "$TMPLOG2" ]; then
-                touch $TMPLOG2;
-        fi
-        nmap -sV --script=vuln --script-args=vulns.short --open $SUBNET -p21-445 > $TMPLOG
-        grep -P 'scan report for|tcp open|tcp  open|VULNERABLE[^"]*' $TMPLOG > $TMPLOG2
-        sed -i 's/Nmap scan report for /\nPort Scan Analysis for /g' $TMPLOG2
-        sed -i 's/.tcp open.*/ Port Analysis: \n/g' $TMPLOG2
-        sed -i 's/.tcp  open.*/ Port Analysis: \n/g' $TMPLOG2
-        cat $TMPLOG2 > $VULNLOG
-        if [ -f "$TMPLOG" ]; then   
-                rm -rf $TMPLOG;
-        fi
-        if [ -f "$TMPLOG2" ]; then
-                rm -rf $TMPLOG2;
-        fi
-}
-    (nmapscancommon; /bin/false) &
+if [ -f "$VULNLOG" ]; then
+	rm -rf $VULNLOG
+fi
+plswait(){
     pid=$! ; i=0
     while ps -a | awk '{print $1}' | grep -q "${pid}"
     do
@@ -51,6 +26,43 @@ nmapscancommon(){
     done
     wait ${pid}
     ret=$?
+}
+nmapscancommon(){
+	printf "        Running Vuln scan for Subnet - $SUBNET \n"
+	printf "          DO NOT EXIT OR CRTL+C!  PROCESSES ARE\n"
+	printf "                   STILL RUNNING!!!\n"
+	printf "\n"
+	printf "  Note: Scan can take 5-15 mins depending on speed of Network.\n"
+	printf "\n"
+	printf "                   Please Wait ... "
+	echo -e "Results of $SUBNET:" > $VULNLOG
+        if [ ! -f "$TMPLOG" ]; then
+                touch $TMPLOG;
+        fi
+        if [ ! -f "$TMPLOG2" ]; then
+                touch $TMPLOG2;
+        fi
+	if [ -z "$DBGIP" ]; then
+		nmap -sV --script=vuln --script-args=vulns.short --open $SUBNET -p21-445 > $TMPLOG
+	else
+		nmap -sV --script=vuln --script-args=vulns.short --open $DBGIP -p21-445 > $TMPLOG
+	fi
+        grep -P 'scan report for|tcp open|tcp  open|VULNERABLE[^"]*' $TMPLOG > $TMPLOG2
+        sed -i 's/Nmap scan report for /\n\nPort Scan Analysis for /g' $TMPLOG2
+	sed -i 's/^|_ / ->/g' $TMPLOG2
+       # sed -i 's/.tcp open.*/ Port Analysis: - OPEN/g' $TMPLOG2
+       # sed -i 's/.tcp  open.*/ Port Analysis: - OPEN/g' $TMPLOG2
+
+        cat $TMPLOG2 > $VULNLOG
+        if [ -f "$TMPLOG" ]; then   
+                rm -rf $TMPLOG;
+        fi
+        if [ -f "$TMPLOG2" ]; then
+                rm -rf $TMPLOG2;
+        fi
+}
+(nmapscancommon; /bin/false) &
+    plswait;
     echo -e ""
     cat $VULNLOG
     echo -e ""
