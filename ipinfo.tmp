@@ -1,39 +1,19 @@
-#!/bin/bash
-#
+#!/bin/bash 
+# Module Header
+MODULENAME="IP Information"
+MODULEVERS="0.2"
+MODULECRED="REDD"
+modcreds;
+# End of Module Header
+
+TMPLOG1="/tmp/netupip.log"
+
 # Credit to http://ipinfo.io for providing the IP address info service. This script is a wrapper around their service, for convenience.
-#
-# Created by Niklas Berglund <niklas.berglund@gmail.com>
+# Rewritten for NET-UP by -REDD-
+# Forked from Niklas Berglund <niklas.berglund@gmail.com>
 # https://github.com/niklasberglund/ipinfo
 
 url="ipinfo.io"
-
-usage() {
-	echo "Usage: $0 [-f field] [IP address]" 1>&2
-	echo " -f field	Only output specified field's info. Run script without -f to see available fields." 1>&2
-	echo " -w		Force use wget instead of curl" 1>&2
-	echo " -h		Show this help text." 1>&2
-}
-
-while getopts "f:hw" o; do
-    case "${o}" in
-        w)
-                use_wget=1
-                ;;
-
-        f)
-            f=${OPTARG}
-            ;;
-		h)
-			usage
-			exit 0
-			;;
-        *)
-            usage
-			exit 1
-            ;;
-    esac
-done
-shift $((OPTIND-1))
 
 # Simple IPv4/IPv6 check. Creds to http://stackoverflow.com/a/20423004/257577
 function is_valid_ip_address {
@@ -71,4 +51,5 @@ if [[ $the_info == *"502 Bad Gateway"* || $the_info == "undefined" ]]; then
 	exit 1
 fi
 
-echo "$the_info" | sed -e '/[{}]/d' | sed 's/\"//g' | sed 's/  //g' | sed 's/,$//'
+echo "$the_info" | sed -e '/[{}]/d' | sed 's/\"//g' | sed 's/  //g' | sed 's/,$//' | column -t >$TMPLOG1
+
