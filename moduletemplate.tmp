@@ -6,6 +6,9 @@ MODULECRED=""
 modcreds;
 # End of Module Header
 
+# EVERY MODULE needs a Header placed to show what version of the module and credits to the author.
+# Please include the above Header in every Module submitted to Private-Locker Module Repo.
+
 # This is a Blank Module to show what commands are present for NET-UP Framework.
 
 # Check Root function
@@ -33,7 +36,7 @@ modcreds;
 # super_upgrade;
 
 # Cleanup OS Update/Upgrade. (APT)
-cleanup
+# cleanup;
 
 # Framework Colored prompts.
 check_good "Test 1.";
