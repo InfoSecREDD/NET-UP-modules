@@ -1,0 +1,18 @@
+#!/bin/bash
+# Module Header
+MODULENAME="Example Multi-Staged Script"
+MODULEVERS="1.0"
+MODULECRED="REDD"
+modcreds;
+# End of Module Header
+
+# Example of Project Folder Module layout.
+
+PROJECTDIR=$MODULEDIR/example_staged
+EXECUTIONFILE=$PROJECTDIR/example.sh
+
+# Executing Project File.
+
+runproject "$EXECUTIONFILE";
+
+# End of Example
