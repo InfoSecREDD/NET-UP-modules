@@ -9,7 +9,7 @@ modcreds;
 EXT="py"
 DOWNLOADFILE="download.$EXT"
 URL=""
-LOCATION="$HOME/netup/downloadexec"
+LOCATION="$HOMEDIR/downloadexec"
 # set METHOD to wget or curl
 METHOD="wget"
 

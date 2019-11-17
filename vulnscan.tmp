@@ -6,7 +6,7 @@ MODULECRED="REDD"
 modcreds;
 # End of Module Header
 
-LOGDIR="$HOME/netup/loot"
+LOGDIR="$HOMEDIR/loot"
 VULNLOG="$LOGDIR/vulnlog.txt"
 TMPLOG="/tmp/netuplog.txt"
 TMPLOG2="/tmp/netuplog2.txt"
