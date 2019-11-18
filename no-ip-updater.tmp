@@ -1,4 +1,11 @@
 #!/bin/bash
+# Module Header
+MODULENAME=""
+MODULEVERS=""
+MODULECRED=""
+modcreds;
+# End of Module Header
+
 #==========================================
 # This WAS NOT CODED by Private-Locker or REDD
 # This is for demostration purposes.
