@@ -15,10 +15,10 @@ modcreds;
 # check_root;
 
 # Check if action was successful.
-# check_success;
+# check_success "";
 
 # Check if Command exists.
-# command_exists;
+# command_exists "";
 
 # Add blank space and newline.
 # do_break;
@@ -41,7 +41,18 @@ modcreds;
 # Force Exit of NET-UP.
 # exitnetup;
 
+# Framework Wait Timers included:
+# do_wtimer_periods "MESSAGE" "TIME";
+# do_wtimer_danceman "MESSAGE" "TIME";
+
+# Run a Specific File inside a Module & Check if Exists.
+# runproject "";
+
 # Framework-wide Variables.
+# $HOMEDIR = NET-UP's Default Directory.
+# $MODULEDIR = NET-UP's Default Module Directory.
+# $D = Date in YYYY-MM-DD Format.
+# $PUBLICIP = Gets the Public Address of the Machine.
 # $SUBNET = Automatically detects the Subnet of your Network.
 # More to come..
 
