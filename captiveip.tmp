@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# Module Header
+MODULENAME=""
+MODULEVERS=""
+MODULECRED=""
+modcreds;
+# End of Module Header
+
 # Forked from https://raw.githubusercontent.com/systematicat/hack-captive-portals
 # Find the initial parameters of wireless interface.
 interface="$(ip -o -4 route show to default | awk '/dev/ {print $5}')"
