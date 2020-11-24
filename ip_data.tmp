@@ -1,0 +1,34 @@
+#!/bin/bash
+# Module Header
+MODULENAME="IP Data"
+MODULEVERS="1.0"
+MODULECRED="AtomicWolF94"
+modcreds;
+# End of Module Header
+
+SIMPLE_TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d')
+IP_DIR="$MODULEDIR/IP_DATA"
+IP_LOGFILE="$IP_DIR/IP_DATA_$SIMPLE_TIME.txt"
+
+EXTIP=$(curl -4 -s ifconfig.co)
+mod_good "Your External IP address: $EXTIP"
+
+INTIP=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
+mod_status "Your Internal IP address: $INTIP"
+
+if [ ! -d "$MODULEDIR/IP_DATA" ]; then
+	mkdir -p "$MODULEDIR/IP_DATA"
+fi
+if [ -f "$IP_LOGFILE" ]; then
+	rm "$IP_LOGFILE"
+fi
+if [ ! -f "$IP_LOGFILE" ]; then
+	touch "$IP_LOGFILE"
+fi
+echo -e "IP Data for $HOSTNAME" >> $IP_LOGFILE
+echo -e "" >> $IP_LOGFILE
+echo -e "External IP: $EXTIP" >> $IP_LOGFILE
+echo -e "" >> $IP_LOGFILE
+echo -e "Internal IP: $INTIP" >> $IP_LOGFILE
+
+
