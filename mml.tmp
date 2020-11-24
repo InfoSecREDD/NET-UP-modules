@@ -25,6 +25,8 @@ fi
 
 for i in ${MODULES[@]}; do
 	mod_status "Running Module: $i"
+	mod_status "--------------------------"
+	do_break;
     if [ -f "$MODULEDIR/$i.tmp" ]; then		
 		source "$MODULEDIR/$i.tmp"
 	elif [ -f "$MODULEDIR/$i.mdu" ]; then
@@ -32,6 +34,7 @@ for i in ${MODULES[@]}; do
 	else
 		mod_error "No module by the name of $i found."
 	fi
+	do_break
 done
 do_break;
 check_good "Multi-Module Launcher Completed."
