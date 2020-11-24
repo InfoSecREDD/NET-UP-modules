@@ -49,8 +49,8 @@ if [ $? -eq 0 ]; then
 	mod_noti "Internet Connection active..";
 	mod_status "Continuing Script...";
 	IP=$(curl -s http://whatismyip.akamai.com/)
-	LOGFILE=$EMAILS/$d-$IP
-	LOGFILETEMP=$EMAILS/$d-$IP-temp
+	OUTBOX=$EMAILS/OUTBOX
+	SENT=$EMAILS/SENT
 	do_break
     if [ ! -d "$EMAILS" ]; then
 	mkdir $EMAILS
@@ -64,7 +64,12 @@ if [ $? -eq 0 ]; then
 			/etc/init.d/$SERVICE start
 		fi
 		# Need to put email inbox/sent/outgoing stuff here.
-
+		if [ ! -d "$OUTBOX" ]; then
+			mkdir -p "$OUTBOX";
+		fi
+		if [ ! -d "$SENT" ]; then
+			mkdir -p "$SENT";
+		fi
 	fi
 	do_break
 	do_break
