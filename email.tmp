@@ -8,7 +8,7 @@ ADDRESS=EMAIL_HERE@EMAIL_HOST
 NAME=$(echo -e "$HOSTNAME Report")
 SENDER='DESIRED_EMAIL@EMAIL_HOST'
 TIME=$(TZ='America/Los_Angeles' date)
-APT_TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d')
+SIMPLE_TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d')
 mod_status "Checking for needed software.."
 check_depends(){
 	if ! command_exists ipcalc ; then
@@ -71,14 +71,24 @@ if [ $? -eq 0 ]; then
 		if [ ! -d "$SENT" ]; then
 			mkdir -p "$SENT";
 		fi
-		if [ -f "/root/netup/modules/APT/apt_$APT_TIME.txt" ]; then
-		    if [ -f "$SENT/apt_$APT_TIME.txt" ]; then
+		if [ -f "$MODULEDIR/APT/apt_$SIMPLE_TIME.txt" ]; then
+		    if [ -f "$SENT/apt_$SIMPLE_TIME.txt" ]; then
 				echo -e "Already sent report for APT today."
 			else
-				cp "/root/netup/modules/APT/apt_$APT_TIME.txt" "$OUTBOX/apt_$APT_TIME.txt"
-				CONTENT_ATTACHMENT=$(cat $OUTBOX/apt_$APT_TIME.txt)
+				cp "$MODULEDIR/APT/apt_$SIMPLE_TIME.txt" "$OUTBOX/apt_$SIMPLE_TIME.txt"
+				CONTENT_ATTACHMENT=$(cat $OUTBOX/apt_$SIMPLE_TIME.txt)
 				echo -e "$CONTENT_ATTACHMENT" |  mutt -s "APT Log for $TIME" $ADDRESS -e "my_hdr"
-				mv "$OUTBOX/apt_$APT_TIME.txt" "$SENT/apt_$APT_TIME.txt"
+				mv "$OUTBOX/apt_$SIMPLE_TIME.txt" "$SENT/apt_$SIMPLE_TIME.txt"
+			fi
+		fi
+		if [ -f "$MODULEDIR/IP_DATA/IP_DATA_$SIMPLE_TIME.txt" ]; then
+		    if [ -f "$SENT/IP_DATA_$SIMPLE_TIME.txt" ]; then
+				echo -e "Already sent report for IP_DATA today."
+			else
+				cp "$MODULEDIR/IP_DATA/apt_$SIMPLE_TIME.txt" "$OUTBOX/IP_DATA_$SIMPLE_TIME.txt"
+				CONTENT_ATTACHMENT=$(cat $OUTBOX/IP_DATA_$SIMPLE_TIME.txt)
+				echo -e "$CONTENT_ATTACHMENT" |  mutt -s "IP Data Log for $TIME" $ADDRESS -e "my_hdr"
+				mv "$OUTBOX/IP_DATA_$SIMPLE_TIME.txt" "$SENT/IP_DATA_$SIMPLE_TIME.txt"
 			fi
 		fi
 	fi
