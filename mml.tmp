@@ -11,7 +11,7 @@ modcreds;
 
 # All current modules available please see. - https://github.com/private-locker/NET-UP-modules
 
-MODULES=(none)
+MODULES=()
 
 
 arrow_status "Executing the Multi-Module Launcher.."
