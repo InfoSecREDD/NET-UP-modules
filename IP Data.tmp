@@ -1,0 +1,12 @@
+#!/bin/bash
+# Module Header
+MODULENAME="IP Data"
+MODULEVERS="1.0"
+MODULECRED="AtomicWolF94"
+modcreds;
+# End of Module Header
+
+EXTIP=$(curl -4 -s ifconfig.co)
+mod_good "Your External IP address: $EXTIP"
+INTIP=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
+mod_status "Your Internal IP address: $INTIP"
