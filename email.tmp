@@ -1,0 +1,73 @@
+#!/bin/bash
+# Script Variables
+cwd=$(pwd)
+EMAILS=~/emails
+MAILER=OFF
+ADDRESS=EMAIL_HERE@EMAIL_HOST
+# - Prints Hostname Report as Senders Name
+NAME=$(echo -e "$HOSTNAME Report")
+SENDER='DESIRED_EMAIL@EMAIL_HOST'
+TIME=$(TZ='America/Los_Angeles' date)
+mod_status "Checking for needed software.."
+check_depends(){
+	if ! command_exists ipcalc ; then
+                mod_noti "Attempting to install ipcalc..";
+                check_root;
+		sudo -k apt-get install -y ipcalc &>/dev/null
+                check_success;
+        fi
+        if ! command_exists postfix ; then
+                mod_noti "Attempting to install postfix..";
+                check_root;
+                sudo -k apt-get install -y postfix
+                check_success;
+        fi
+        if ! command_exists mutt ; then
+                mod_noti "Attempting to install mutt..";
+                check_root;
+                sudo -k apt-get install -y mutt
+                check_success;
+        fi
+        if ! command_exists mailutils ; then
+                mod_noti "Attempting to install mailutils..";
+                check_root;
+                sudo -k apt-get install -y mailutils &>/dev/null
+                check_success;
+        fi
+        if ! command_exists nmap ; then
+                mod_noti "Attempting to install nmap..";
+                check_root;
+                sudo -k apt-get install -y nmap &>/dev/null
+                check_success;
+        fi
+}
+check_depends;
+do_break
+mod_status "Pinging Google to check Internet...";
+wget -q --spider http://google.com
+if [ $? -eq 0 ]; then
+	mod_noti "Internet Connection active..";
+	mod_status "Continuing Script...";
+	IP=$(curl -s http://whatismyip.akamai.com/)
+	LOGFILE=$EMAILS/$d-$IP
+	LOGFILETEMP=$EMAILS/$d-$IP-temp
+	do_break
+    if [ ! -d "$EMAILS" ]; then
+	mkdir $EMAILS
+	fi
+	if [ $MAILER = "ON" ]; then
+		SERVICE=postfix
+		if (( $(ps -ef | grep -v grep | grep $SERVICE | wc -l) > 0 )); then
+			do_break
+			mod_noti "$SERVICE is running, continuing script."
+		else
+			/etc/init.d/$SERVICE start
+		fi
+		# Need to put email inbox/sent/outgoing stuff here.
+
+	fi
+	do_break
+	do_break
+else
+    mod_error "Offline. Please Check Internet Connection."
+fi
