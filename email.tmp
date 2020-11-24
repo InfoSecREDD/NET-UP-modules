@@ -72,9 +72,14 @@ if [ $? -eq 0 ]; then
 			mkdir -p "$SENT";
 		fi
 		if [ -f "/root/netup/modules/APT/apt_$APT_TIME.txt" ]; then
-			cp "/root/netup/modules/APT/apt_$APT_TIME.txt" "$OUTBOX/apt_$APT_TIME.txt"
-			CONTENT_ATTACHMENT=$(cat $OUTBOX/apt_$APT_TIME.txt)
-			echo -e "$CONTENT_ATTACHMENT" |  mutt -s "APT Log for $TIME" $ADDRESS -e "my_hdr"
+		    if [ -f "$SENT/apt_$APT_TIME.txt" ]; then
+				echo -e "Already sent report for APT today."
+			else
+				cp "/root/netup/modules/APT/apt_$APT_TIME.txt" "$OUTBOX/apt_$APT_TIME.txt"
+				CONTENT_ATTACHMENT=$(cat $OUTBOX/apt_$APT_TIME.txt)
+				echo -e "$CONTENT_ATTACHMENT" |  mutt -s "APT Log for $TIME" $ADDRESS -e "my_hdr"
+				mv "$OUTBOX/apt_$APT_TIME.txt" "$SENT/apt_$APT_TIME.txt"
+			fi
 		fi
 	fi
 	do_break
