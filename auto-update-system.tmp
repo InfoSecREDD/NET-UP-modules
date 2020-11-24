@@ -7,7 +7,7 @@ if [ $? -eq 0 ]; then
 	echo -e "Starting Unattended APT Upgrades."
 	export DEBIAN_FRONTEND=noninteractive
 	export DEBIAN_PRIORITY=critical
-	APT_LOG=$cwd/APT
+	APT_LOG=$MODULEDIR/APT
 	if [ ! -d "$APT_LOG" ]; then
 		mkdir -p "$APT_LOG"
 	fi
