@@ -1,28 +1,32 @@
 #!/bin/bash
 cwd=$(pwd)
 TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d')
-
-echo -e "Starting Unattended APT Upgrades."
-
-export DEBIAN_FRONTEND=noninteractive
-export DEBIAN_PRIORITY=critical
-APT_LOG=$cwd/APT
-if [ ! -d "$APT_LOG" ]; then
-	mkdir -p "$APT_LOG"
-fi
-APT_LOGFILE="$APT_LOG/apt_$TIME.txt"
-if [ -f "$APT_LOGFILE" ]; then
-	echo -e "Already updated today. Run again tomorrow."
-	echo -e "Finished."
+mod_status "Pinging Google to check Internet...";
+wget -q --spider http://google.com
+if [ $? -eq 0 ]; then
+	echo -e "Starting Unattended APT Upgrades."
+	export DEBIAN_FRONTEND=noninteractive
+	export DEBIAN_PRIORITY=critical
+	APT_LOG=$cwd/APT
+	if [ ! -d "$APT_LOG" ]; then
+		mkdir -p "$APT_LOG"
+	fi
+	APT_LOGFILE="$APT_LOG/apt_$TIME.txt"
+	if [ -f "$APT_LOGFILE" ]; then
+		echo -e "Already updated today. Run again tomorrow."
+		echo -e "Finished."
+	else
+		touch "$APT_LOGFILE"
+		echo -e "Start of APT Log for $TIME" >> $APT_LOGFILE
+		echo -e "" >> $APT_LOGFILE
+		sudo -E apt-get -qy update >> $APT_LOGFILE 
+		sudo -E apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" upgrade >> $APT_LOGFILE
+		sudo -E apt-get -qy autoclean >> $APT_LOGFILE
+		echo -e "" >> $APT_LOGFILE
+		echo -e "End of APT Log for $TIME" >> $APT_LOGFILE
+		echo -e "" >> $APT_LOGFILE
+		echo -e "Finished."
+	fi
 else
-	touch "$APT_LOGFILE"
-	echo -e "Start of APT Log for $TIME" >> $APT_LOGFILE
-	echo -e "" >> $APT_LOGFILE
-	sudo -E apt-get -qy update >> $APT_LOGFILE 
-	sudo -E apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" upgrade >> $APT_LOGFILE
-	sudo -E apt-get -qy autoclean >> $APT_LOGFILE
-	echo -e "" >> $APT_LOGFILE
-	echo -e "End of APT Log for $TIME" >> $APT_LOGFILE
-	echo -e "" >> $APT_LOGFILE
-	echo -e "Finished."
+	echo -e "No connection. Please try again."
 fi
