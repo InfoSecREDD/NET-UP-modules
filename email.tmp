@@ -8,6 +8,7 @@ ADDRESS=EMAIL_HERE@EMAIL_HOST
 NAME=$(echo -e "$HOSTNAME Report")
 SENDER='DESIRED_EMAIL@EMAIL_HOST'
 TIME=$(TZ='America/Los_Angeles' date)
+APT_TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d')
 mod_status "Checking for needed software.."
 check_depends(){
 	if ! command_exists ipcalc ; then
@@ -69,6 +70,11 @@ if [ $? -eq 0 ]; then
 		fi
 		if [ ! -d "$SENT" ]; then
 			mkdir -p "$SENT";
+		fi
+		if [ -f "/root/netup/modules/APT/apt_$APT_TIME.txt" ]; then
+			cp "/root/netup/modules/APT/apt_$APT_TIME.txt" "$OUTBOX/apt_$APT_TIME.txt"
+			CONTENT_ATTACHMENT=$(cat $OUTBOX/apt_$APT_TIME.txt)
+			echo -e "$CONTENT_ATTACHMENT" |  mutt -s "APT Log for $TIME" $ADDRESS -e "my_hdr"
 		fi
 	fi
 	do_break
