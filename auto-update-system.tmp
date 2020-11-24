@@ -1,5 +1,6 @@
 #!/bin/bash
 cwd=$(pwd)
+TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d')
 
 echo -e "Starting Unattended APT Upgrades."
 
@@ -9,12 +10,16 @@ APT_LOG=/root/netup/modules/APT
 if [ ! -d "$APT_LOG" ]; then
 	mkdir -p "$APT_LOG"
 fi
-APT_LOGFILE="$APT_LOG/apt.txt"
-touch "$APT_LOGFILE"
-echo -e "Start of APT Log for $DATE" >> $APT_LOGFILE
-sudo -E apt-get -qy update >> $APT_LOGFILE 
-sudo -E apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" upgrade >> $APT_LOGFILE
-sudo -E apt-get -qy autoclean >> $APT_LOGFILE
-echo -e "End of APT Log for $DATE" >> $APT_LOGFILE
-echo -e "" >> $APT_LOGFILE
-echo -e "Finished."
+APT_LOGFILE="$APT_LOG/apt_$TIME.txt"
+if [ -f "$APT_LOGFILE" ]; then
+	echo -e "Already updated today. Run again tomorrow."
+else
+	touch "$APT_LOGFILE"
+	echo -e "Start of APT Log for $TIME" >> $APT_LOGFILE
+	sudo -E apt-get -qy update >> $APT_LOGFILE 
+	sudo -E apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" upgrade >> $APT_LOGFILE
+	sudo -E apt-get -qy autoclean >> $APT_LOGFILE
+	echo -e "End of APT Log for $TIME" >> $APT_LOGFILE
+	echo -e "" >> $APT_LOGFILE
+	echo -e "Finished."
+fi
