@@ -6,7 +6,7 @@ echo -e "Starting Unattended APT Upgrades."
 
 export DEBIAN_FRONTEND=noninteractive
 export DEBIAN_PRIORITY=critical
-APT_LOG=/root/netup/modules/APT
+APT_LOG=$cwd/APT
 if [ ! -d "$APT_LOG" ]; then
 	mkdir -p "$APT_LOG"
 fi

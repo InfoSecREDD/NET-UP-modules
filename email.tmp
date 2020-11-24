@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Variables
 cwd=$(pwd)
-EMAILS=~/emails
+EMAILS=$cwd/emails
 MAILER=OFF
 ADDRESS=EMAIL_HERE@EMAIL_HOST
 # - Prints Hostname Report as Senders Name
