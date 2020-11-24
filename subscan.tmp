@@ -51,13 +51,13 @@ check_depends(){
         if ! command_exists postfix ; then
                 mod_noti "Attempting to install postfix..";
                 check_root;
-                sudo -k apt-get install -y postfix &>/dev/null
+                sudo -k apt-get install -y postfix
                 check_success;
         fi
         if ! command_exists mutt ; then
                 mod_noti "Attempting to install mutt..";
                 check_root;
-                sudo -k apt-get install -y mutt &>/dev/null
+                sudo -k apt-get install -y mutt
                 check_success;
         fi
         if ! command_exists mailutils ; then
