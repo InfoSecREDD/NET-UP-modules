@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo -e "Starting Unattended APT Upgrades."
+
+export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_PRIORITY=critical
+sudo -E apt-get -qy update
+sudo -E apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" upgrade
+sudo -E apt-get -qy autoclean
+
+echo -e "Finished."
