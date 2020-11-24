@@ -16,7 +16,7 @@ MODULES=(none)
 
 arrow_status "Executing the Multi-Module Launcher.."
 do_break;
-if [[ ("$MODULES" -eq "" ) || ( "$MODULES" -eq "none" ) ]]; then
+if [[ "$MODULES" == "" ]]; then
 	mod_error "Please edit mml module in:"
 	mod_error "  ->  $MODULEDIR"
 	do_break;
