@@ -1,0 +1,37 @@
+#!/bin/bash
+# Module Header
+MODULENAME="Multi-Module Launcher (MML)"
+MODULEVERS="1.0"
+MODULECRED="REDD"
+modcreds;
+# End of Module Header
+
+# Place Module Files below that you want to launch in the order you want.
+# Example: MODULES=(auto-update-system ip_data subscan email)
+
+# All current modules available please see. - https://github.com/private-locker/NET-UP-modules
+
+MODULES=(none)
+
+
+arrow_status "Executing the Multi-Module Launcher.."
+do_break;
+if [[ ("$MODULES" -eq "" ) || ( "$MODULES" -eq "none" ) ]]; then
+	mod_error "Please edit mml module in:"
+	mod_error "  ->  $MODULEDIR"
+	do_break;
+	exitnetup;
+fi
+
+for i in ${MODULES[@]}; do
+	mod_status "Running Module: $i"
+    if [ -f "$MODULEDIR/$i.tmp" ]; then		
+		source "$MODULEDIR/$i.tmp"
+	elif [ -f "$MODULEDIR/$i.mdu" ]; then
+		source "$MODULEDIR/$i.mdu"
+	else
+		mod_error "No module by the name of $i found."
+	fi
+done
+do_break;
+check_good "Multi-Module Launcher Completed."
