@@ -24,7 +24,8 @@ if [[ "$MODULES" == "" ]]; then
 fi
 
 for i in ${MODULES[@]}; do
-	mod_status "Running Module: $i"
+	do_break;
+	mod_noti "Running Module: $i"
 	mod_status "--------------------------"
 	do_break;
     if [ -f "$MODULEDIR/$i.tmp" ]; then		
