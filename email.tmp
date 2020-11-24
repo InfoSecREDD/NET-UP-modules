@@ -85,7 +85,7 @@ if [ $? -eq 0 ]; then
 		    if [ -f "$SENT/IP_DATA_$SIMPLE_TIME.txt" ]; then
 				echo -e "Already sent report for IP_DATA today."
 			else
-				cp "$MODULEDIR/IP_DATA/apt_$SIMPLE_TIME.txt" "$OUTBOX/IP_DATA_$SIMPLE_TIME.txt"
+				cp "$MODULEDIR/IP_DATA/IP_DATA_$SIMPLE_TIME.txt" "$OUTBOX/IP_DATA_$SIMPLE_TIME.txt"
 				CONTENT_ATTACHMENT=$(cat $OUTBOX/IP_DATA_$SIMPLE_TIME.txt)
 				echo -e "$CONTENT_ATTACHMENT" |  mutt -s "IP Data Log for $TIME" $ADDRESS -e "my_hdr"
 				mv "$OUTBOX/IP_DATA_$SIMPLE_TIME.txt" "$SENT/IP_DATA_$SIMPLE_TIME.txt"
